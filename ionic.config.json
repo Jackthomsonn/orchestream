@@ -1,0 +1,8 @@
+{
+  "name": "house-party",
+  "app_id": "271e0e1c",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
