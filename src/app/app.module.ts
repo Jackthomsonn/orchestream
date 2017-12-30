@@ -1,40 +1,59 @@
-import { NgModule, ErrorHandler } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
+import { QRScanner } from '@ionic-native/qr-scanner'
+import { NativeStorage } from '@ionic-native/native-storage'
+import { WelcomePage } from './../pages/welcome/welcome'
+import { NgModule, ErrorHandler } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular'
+import { MyApp } from './app.component'
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
+import { HttpClientModule } from '@angular/common/http'
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { JoinPartyPage } from '../pages/join-party/join-party'
+import { SongsListPage } from '../pages/songs-list/songs-list'
+import { TabsPage } from '../pages/tabs/tabs'
+
+import { StatusBar } from '@ionic-native/status-bar'
+import { SplashScreen } from '@ionic-native/splash-screen'
+
+import { MusicServiceProvider } from '../providers/music-service/music-service'
+import { SocketServiceProvider } from '../providers/socket-service/socket-service'
+import { SettingsPage } from '../pages/settings/settings'
+import { AppVersion } from '@ionic-native/app-version'
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
+    JoinPartyPage,
+    SongsListPage,
+    WelcomePage,
+    SettingsPage,
     TabsPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+      tabsHideOnSubPages: true
+    }),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
+    JoinPartyPage,
+    SongsListPage,
+    WelcomePage,
+    SettingsPage,
     TabsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    MusicServiceProvider,
+    SocketServiceProvider,
+    NativeStorage,
+    QRScanner,
+    AppVersion
   ]
 })
-export class AppModule {}
+export class AppModule { }

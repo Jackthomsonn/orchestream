@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+    <ion-title>Lets get you set up</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-col text-center>
+    <h2>Give yourself a nickname</h2>
+    <p>Make sure to not use your real name</p>
+  </ion-col>
+  <ion-col>
+    <ion-item>
+      <ion-label color="primary"
+                 stacked>Choose a nickname</ion-label>
+      <ion-input type="text"
+                 [(ngModel)]="nickname"
+                 placeholder="Bannanna Pickle"></ion-input>
+    </ion-item>
+  </ion-col>
+  <ion-col>
+    <button ion-button
+            full
+            [disabled]="!nickname"
+            (click)="setUserPreferences()">Lets get started</button>
+  </ion-col>
+
+</ion-content>

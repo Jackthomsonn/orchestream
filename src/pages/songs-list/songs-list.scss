@@ -1,0 +1,50 @@
+  page-songs-list {
+
+    .song-holder {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: #FFF;
+      padding: 1em;
+
+      &:nth-of-type(even) {
+          background: lighten(#F7F8FB, 1%);
+      }
+
+      & > ion-col {
+        
+        & > p {
+          color: #264653;
+          font-size: .9em;
+          margin: 0;
+        }
+
+        & > strong {
+          color: #264653;
+          font-size: .9em;
+        }
+      }
+
+      & > img {
+          width: 4em;
+          height: 4em;
+          margin-right: 1em;
+          border-radius: 100%;
+      }
+
+      .actions {
+        display: flex;
+
+        button {
+          background: #FFF;
+          color: #264653;
+          border: 1px solid darken(#FFF, 10%);
+          box-shadow: 0 5px 30px darken(#FFF, 5%);
+          border-radius: 3px;
+          padding: 1em;
+          outline: none;
+        }
+      }
+  }
+}

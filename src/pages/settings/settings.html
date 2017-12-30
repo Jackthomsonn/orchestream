@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-col text-center>
+    <h2>Your settings</h2>
+    <p>Manage settings here</p>
+  </ion-col>
+  <ion-col>
+    <ion-item>
+      <ion-label color="primary" stacked>Your nickname</ion-label>
+      <ion-input type="text" [(ngModel)]="nickname"></ion-input>
+    </ion-item>
+  </ion-col>
+
+  <ion-col>
+    <button ion-button full [disabled]="!nickname" (click)="update()">Save</button>
+  </ion-col>
+
+  <ion-col text-center>
+    <p>{{ appName }}</p>
+    <p>v{{ appVersion }}</p>
+  </ion-col>
+</ion-content>

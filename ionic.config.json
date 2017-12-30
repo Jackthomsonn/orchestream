@@ -1,6 +1,6 @@
 {
-  "name": "house-party",
-  "app_id": "271e0e1c",
+  "name": "orchestream",
+  "app_id": "eabdc03c",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

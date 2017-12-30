@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ currentlyPlaying }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (ionInput)="search($event)" debounce="1000" placeholder="Search for music">
+  </ion-searchbar>
+  <ion-grid>
+    <ion-row>
+      <div *ngFor="let song of songs" class="song-holder">
+        <img src="{{song.image}}" />
+        <ion-col>
+          <strong>{{ song.artist }}</strong>
+          <p>{{ song.songName }}</p>
+        </ion-col>
+        <div class="actions">
+          <button *ngIf="song.isInQueue" disabled>Song in queue</button>
+          <button (click)="requestSong(song)" *ngIf="!song.isInQueue">Request song</button>
+        </div>
+      </div>
+    </ion-row>
+  </ion-grid>
+</ion-content>

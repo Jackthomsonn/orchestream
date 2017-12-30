@@ -1,8 +1,8 @@
 {
-  "name": "house-party",
+  "name": "orchestream",
   "version": "0.0.1",
   "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "homepage": "http://jackthomson.co.uk/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -20,14 +20,29 @@
     "@angular/http": "5.0.3",
     "@angular/platform-browser": "5.0.3",
     "@angular/platform-browser-dynamic": "5.0.3",
+    "@ionic-native/app-version": "^4.5.2",
     "@ionic-native/core": "4.4.0",
+    "@ionic-native/native-storage": "^4.5.2",
+    "@ionic-native/qr-scanner": "^4.5.2",
     "@ionic-native/splash-screen": "4.4.0",
     "@ionic-native/status-bar": "4.4.0",
     "@ionic/pro": "1.0.16",
     "@ionic/storage": "2.1.3",
+    "cordova-ios": "4.5.4",
+    "cordova-plugin-device": "^1.1.4",
+    "cordova-plugin-ionic-webview": "^1.1.16",
+    "cordova-plugin-qrscanner": "^2.5.0",
+    "cordova-plugin-splashscreen": "^4.0.3",
+    "cordova-plugin-swift-support": "^3.1.1",
+    "cordova-plugin-whitelist": "^1.3.1",
+    "i": "0.3.6",
     "ionic-angular": "3.9.2",
+    "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
     "rxjs": "5.5.2",
+    "shortid": "^2.2.8",
+    "simple-plist": "^0.2.1",
+    "socket.io-client": "^2.0.4",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.18"
   },
@@ -35,5 +50,18 @@
     "@ionic/app-scripts": "3.1.4",
     "typescript": "2.4.2"
   },
-  "description": "An Ionic project"
+  "description": "Your Virtual DJ",
+  "cordova": {
+    "plugins": {
+      "ionic-plugin-keyboard": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-qrscanner": {}
+    },
+    "platforms": [
+      "ios"
+    ]
+  }
 }
