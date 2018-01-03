@@ -7,21 +7,17 @@ import * as shortId from 'shortid'
 @Injectable()
 export class MusicServiceProvider {
   private orchestreamApiUri: string
-  private orchestreamSettingsUri: string
   private orchestreamMusicRequestApi: string
-  private housePartiesUri: string
+  private orchestreamPartiesUri: string
 
   constructor(private http: HttpClient) {
     this.orchestreamApiUri = 'https://house-party.herokuapp.com/api/music'
-    this.orchestreamSettingsUri = 'https://house-party.herokuapp.com/api/settings'
     this.orchestreamMusicRequestApi = 'https://house-party.herokuapp.com/api/music/requests'
-    this.housePartiesUri = 'https://house-party.herokuapp.com/api/house-parties'
+    this.orchestreamPartiesUri = 'https://house-party.herokuapp.com/api/house-parties'
   }
 
   public getMusicRequests() {
-    let url = this.orchestreamMusicRequestApi
-
-    return this.http.get(url)
+    return this.http.get(this.orchestreamMusicRequestApi)
   }
 
   public getSongs(qParam?: string) {
@@ -38,14 +34,7 @@ export class MusicServiceProvider {
     return this.http.post(this.orchestreamMusicRequestApi, requestedSong)
   }
 
-  public createParty(partyName: string) {
-    return this.http.post(this.housePartiesUri, {
-      name: partyName,
-      partyId: shortId.generate()
-    })
-  }
-
   public getHouseParties() {
-    return this.http.get(this.housePartiesUri)
+    return this.http.get(this.orchestreamPartiesUri)
   }
 }

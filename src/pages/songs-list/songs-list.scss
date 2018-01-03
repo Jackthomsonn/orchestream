@@ -15,13 +15,13 @@
       & > ion-col {
         
         & > p {
-          color: #264653;
+          color: map-get($colors, 'tertiary');
           font-size: .9em;
           margin: 0;
         }
 
         & > strong {
-          color: #264653;
+          color: map-get($colors, 'tertiary');
           font-size: .9em;
         }
       }
@@ -37,10 +37,10 @@
         display: flex;
 
         button {
-          background: #FFF;
+          background: map-get($colors, 'secondary');
           color: #264653;
-          border: 1px solid darken(#FFF, 10%);
-          box-shadow: 0 5px 30px darken(#FFF, 5%);
+          border: 1px solid darken(map-get($colors, 'secondary'), 10%);
+          box-shadow: 0 5px 30px darken(map-get($colors, 'secondary'), 5%);
           border-radius: 3px;
           padding: 1em;
           outline: none;

@@ -10,6 +10,7 @@ $app-direction: ltr;
 $colors: (
   primary:    #569BDE,
   secondary:  #FFF,
+  tertiary:   #264653,
   danger:     #F76A6A
 );
 
@@ -18,7 +19,7 @@ $tabs-background: map-get($colors, 'primary');
 $tabs-tab-color-active: map-get($colors, 'secondary');
 $tabs-tab-color-inactive: map-get($colors, 'secondary');
 
-$searchbar-ios-background-color: #FFF;
-$searchbar-ios-padding-vertical: 10px;
+$searchbar-ios-background-color: transparent;
+$searchbar-ios-padding-horizontal: 0;
 
 $img-placeholder-background: transparent;

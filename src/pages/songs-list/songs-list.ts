@@ -16,11 +16,15 @@ import { IonicPage, NavParams } from 'ionic-angular'
   selector: 'page-songs-list',
   templateUrl: 'songs-list.html',
 })
+
 export class SongsListPage {
   public songs: Array<ISong>
   public currentlyPlaying: string
+  public orchestreamName: string
+  public searchValue: string
 
   private nickname: string
+  private toastInstance: any
 
   constructor(
     private navParams: NavParams,
@@ -32,7 +36,8 @@ export class SongsListPage {
   }
 
   public search(event) {
-    let val = event.target.value
+    this.searchValue = event.target.value
+
     const loading = this.loadingCtrl.create({
       spinner: 'crescent',
       content: 'Searching'
@@ -40,9 +45,11 @@ export class SongsListPage {
 
     loading.present()
 
-    this.musicServiceProvider.getSongs(val).subscribe((songs: Array<ISong>) => {
+    this.musicServiceProvider.getSongs(this.searchValue).subscribe((songs: Array<ISong>) => {
       this.songs = songs
-      loading.dismiss()
+      this.checkIfSongIsInQueue().then(() => {
+        loading.dismiss()
+      })
     })
   }
 
@@ -80,19 +87,25 @@ export class SongsListPage {
   }
 
   private checkIfSongIsInQueue() {
-    this.musicServiceProvider.getMusicRequests().subscribe((requestedSongs: Array<ISong>) => {
-      this.songs.forEach((song) => {
-        song.isInQueue = false
-        requestedSongs.forEach((requestedSong) => {
-          if (song.link === requestedSong.link) {
-            song.isInQueue = true
-          }
+    return new Promise((resolve) => {
+      this.musicServiceProvider.getMusicRequests().subscribe((requestedSongs: Array<ISong>) => {
+        this.songs.forEach((song) => {
+          song.isInQueue = false
+          requestedSongs.forEach((requestedSong, index) => {
+            if (song.link === requestedSong.link) {
+              song.isInQueue = true
+            }
+            if (index === requestedSongs.length - 1) {
+              resolve()
+            }
+          })
         })
       })
     })
   }
 
   private populateSongsList() {
+    this.orchestreamName = this.navParams.data.partyName
     this.songs = this.navParams.data.songs
 
     this.checkIfSongIsInQueue()
@@ -118,9 +131,27 @@ export class SongsListPage {
         this.currentlyPlaying = 'No songs are currently playing'
         return
       }
-      this.currentlyPlaying = `${requestedSongs[0].artist} - ${requestedSongs[0].songName}`
+      this.currentlyPlaying = `Currently Playing: ${requestedSongs[0].artist} - ${requestedSongs[0].songName}`
     })
     this.checkIfSongIsInQueue()
+  }
+
+  private presentToast(data) {
+    if (this.toastInstance) {
+      return
+    }
+
+    this.toastInstance = this.toastCtrl.create({
+      message: `${this.whoRequested(data)} requested ${data.artist} - ${data.songName}`,
+      duration: 1000,
+      position: 'top'
+    })
+
+    this.toastInstance.onDidDismiss(() => {
+      this.toastInstance = null
+    })
+
+    this.toastInstance.present()
   }
 
   ionViewDidLoad() {
@@ -131,14 +162,7 @@ export class SongsListPage {
     this.socketServiceProvider.on('songRequested', (data: ISongRequest) => {
       this.checkIfSongIsInQueue()
 
-      const toast = this.toastCtrl.create({
-        message: `${this.whoRequested(data)} requested ${data.artist} - ${data.songName}`,
-        duration: 3000,
-        position: 'top'
-      })
-
-      toast.dismissAll()
-      toast.present()
+      this.presentToast(data)
     })
 
     this.socketServiceProvider.on('songChanged', this.getCurrentSong.bind(this))

@@ -16,10 +16,12 @@ import { IParty } from '../../interfaces/IParty'
 @IonicPage()
 @Component({
   selector: 'page-join-party',
-  templateUrl: 'join-party.html',
+  templateUrl: 'join-party.html'
 })
 
 export class JoinPartyPage {
+  private partyName: string
+
   constructor(
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
@@ -32,79 +34,87 @@ export class JoinPartyPage {
   }
 
   public getStarted() {
+    this.qrScanner.prepare()
+      .then(this.initialiseQrReader.bind(this))
+      .catch(this.handleQrReaderException.bind(this))
+  }
+
+  private handleQrReaderException() {
+    const alert = this.alertCtrl.create({
+      title: 'Camera Access',
+      subTitle: 'Orchestream needs access to your camera in order to join',
+      buttons: [{
+        text: 'Settings',
+        role: 'settings',
+        handler: () => {
+          this.qrScanner.openSettings()
+        }
+      }, {
+        text: 'Cancel'
+      }]
+    })
+
+    alert.present()
+  }
+
+  private initialiseQrReader(status: QRScannerStatus) {
+    if (!status.authorized) {
+      return
+    }
+
     const ionApp: any = document.getElementsByTagName('ion-app')[0]
     const loader = this.loadingCtrl.create({
       content: 'Joining Orchestream'
     })
 
-    this.qrScanner.prepare().then((status: QRScannerStatus) => {
-      if (status.authorized) {
-        ionApp.style.display = 'none'
-        this.qrScanner.show()
+    ionApp.style.display = 'none'
+    this.qrScanner.show()
 
-        let scanSub = this.qrScanner.scan().subscribe((orchestreamId: string) => {
-          loader.present()
-          ionApp.style.display = 'flex'
+    let scanSub = this.qrScanner.scan().subscribe((orchestreamId: string) => {
+      loader.present()
+      ionApp.style.display = 'flex'
 
-          this.doesPartyExist(orchestreamId).then((data) => {
-            if (!data) {
-              const alert = this.alertCtrl.create({
-                title: 'Not a valid Orchestream badge',
-                subTitle: 'Please provide a valid orchestream qr',
-                buttons: ['Dismiss']
-              })
-
-              alert.present()
-              loader.dismiss()
-
-              return false;
-            }
-
-            this.musicServiceProvider.getSongs().subscribe(songs => {
-              this.socketServiceProvider.partyId = orchestreamId
-              this.socketServiceProvider.emit('joinRoom', this.socketServiceProvider.partyId)
-              this.navCtrl.push(SongsListPage, { songs: songs })
-              loader.dismiss()
-            })
-          })
-        }, error => {
+      this.doesPartyExist(orchestreamId).then((data) => {
+        if (!data) {
           const alert = this.alertCtrl.create({
-            title: 'Error',
-            subTitle: JSON.stringify(error),
+            title: 'Not a valid Orchestream badge',
+            subTitle: 'Please provide a valid orchestream qr',
             buttons: ['Dismiss']
           })
 
-          this.qrScanner.hide()
-
           alert.present()
-          scanSub.unsubscribe()
+          loader.dismiss()
+
+          return false
+        }
+
+        this.musicServiceProvider.getSongs().subscribe(songs => {
+          this.socketServiceProvider.partyId = orchestreamId
+          this.socketServiceProvider.emit('joinRoom', this.socketServiceProvider.partyId)
+          this.navCtrl.push(SongsListPage, { songs: songs, partyName: this.getPartyName() })
+          loader.dismiss()
         })
-      }
-    }).catch((error: any) => {
+      })
+    }, error => {
       const alert = this.alertCtrl.create({
-        title: 'Camera Access',
-        subTitle: 'Orchestream needs access to your camera in order to join',
-        buttons: [{
-          text: 'Settings',
-          role: 'settings',
-          handler: () => {
-            this.qrScanner.openSettings()
-          }
-        }, {
-          text: 'Cancel'
-        }]
+        title: 'Error',
+        subTitle: JSON.stringify(error),
+        buttons: ['Dismiss']
       })
 
+      this.qrScanner.hide()
+
       alert.present()
+      scanSub.unsubscribe()
     })
   }
 
-  public clearMemory() {
-    this.nativeStorage.clear()
+  private setPartyName(partyName) {
+    this.partyName = partyName
   }
 
-  public closeCamera() {
-    this.qrScanner.hide()
+  private getPartyName() {
+    return this.partyName
   }
 
   private doesPartyExist(orchestreamId: string) {
@@ -113,6 +123,7 @@ export class JoinPartyPage {
         for (let index = 0; index < parties.length; index++) {
           if (parties[index].partyId === orchestreamId) {
             resolve(true)
+            this.setPartyName(parties[index].name)
           } else if (parties[index].partyId !== orchestreamId && index === parties.length - 1) {
             resolve(false)
           }

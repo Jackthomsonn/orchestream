@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { WelcomePage } from './welcome';
+import { NgModule } from '@angular/core'
+import { IonicPageModule } from 'ionic-angular'
+import { WelcomePage } from './welcome'
 
 @NgModule({
   imports: [
@@ -8,4 +8,4 @@ import { WelcomePage } from './welcome';
   ],
 })
 
-export class WelcomePageModule {}
+export class WelcomePageModule { }
