@@ -8,7 +8,7 @@ export class SocketServiceProvider {
   public socket: io
 
   constructor() {
-    this.socketUri = 'http://house-party.io/'
+    this.socketUri = 'https://house-party.herokuapp.com/'
     this.connectClientSocket()
   }
 
