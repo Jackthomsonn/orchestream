@@ -3,7 +3,7 @@
     <ion-title>Join an orchestream</ion-title>
     <ion-buttons end>
       <button (click)="goToSettings()">
-        <ion-icon name="cog"></ion-icon>
+        <ion-icon name="settings"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -19,12 +19,15 @@
         <p>&nbsp;</p>
         <h1>Be in control of the music you want to hear</h1>
         <p>&nbsp;</p>
-        <p>When your ready, click the button below and scan a Orchestream QR badge</p>
+        <p>When your ready, click the button below and scan an Orchestream badge</p>
       </ion-row>
     </ion-col>
   </ion-col>
 
   <div button-container ion-col text-center>
-    <button fab (click)='getStarted()'>Scan badge</button>
+    <button fab (click)='getStarted()' ion-button icon-end>
+      Scan badge
+      <ion-icon name="qr-scanner" style='font-size: 22px'></ion-icon>
+    </button>
   </div>
 </ion-content>

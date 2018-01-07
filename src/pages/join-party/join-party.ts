@@ -83,7 +83,7 @@ export class JoinPartyPage {
         if (!data) {
           const alert = this.alertCtrl.create({
             title: 'Not a valid Orchestream badge',
-            subTitle: 'Please provide a valid orchestream qr',
+            subTitle: 'Please provide a valid orchestream badge',
             buttons: ['Dismiss']
           })
 

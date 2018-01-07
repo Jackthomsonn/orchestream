@@ -16,6 +16,9 @@
     </ion-item>
   </ion-col>
   <div button-container ion-col text-center>
-    <button fab [disabled]='!nickname' (click)='setUserPreferences()'>Lets get started</button>
+    <button fab [disabled]='!nickname' (click)='setUserPreferences()' ion-button icon-end>
+      Lets get started
+      <ion-icon name="arrow-forward" style='font-size: 22px'></ion-icon>
+    </button>
   </div>
 </ion-content>

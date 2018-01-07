@@ -17,7 +17,10 @@
   </ion-col>
 
   <div button-container ion-col text-center>
-    <button fab [disabled]='!nickname' (click)='update()'>Update</button>
+    <button fab [disabled]='!nickname' (click)='update()' ion-button icon-end>
+      Update
+      <ion-icon name="checkmark-circle-outline" style='font-size: 22px'></ion-icon>
+    </button>
   </div>
 
   <ion-col text-center>
