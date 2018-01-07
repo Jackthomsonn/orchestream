@@ -3,6 +3,7 @@ import { NativeStorage } from '@ionic-native/native-storage'
 import { Component } from '@angular/core'
 import { IonicPage, NavController } from 'ionic-angular'
 import { AlertController } from 'ionic-angular/components/alert/alert-controller'
+import { Platform } from 'ionic-angular/platform/platform';
 
 @IonicPage()
 @Component({

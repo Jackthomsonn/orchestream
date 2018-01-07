@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header no-border>
   <ion-navbar>
     <ion-title>Settings</ion-title>
   </ion-navbar>
@@ -11,14 +11,14 @@
   </ion-col>
   <ion-col>
     <ion-item>
-      <ion-label color="primary" stacked>Your nickname</ion-label>
+      <ion-label color="primary" floating>Your nickname</ion-label>
       <ion-input type="text" [(ngModel)]="nickname"></ion-input>
     </ion-item>
   </ion-col>
 
-  <ion-col>
-    <button ion-button full [disabled]="!nickname" (click)="update()">Save</button>
-  </ion-col>
+  <div button-container ion-col text-center>
+    <button fab [disabled]='!nickname' (click)='update()'>Update</button>
+  </div>
 
   <ion-col text-center>
     <p>{{ appName }}</p>

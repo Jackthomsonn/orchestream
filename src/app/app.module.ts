@@ -10,14 +10,13 @@ import { HttpClientModule } from '@angular/common/http'
 
 import { JoinPartyPage } from '../pages/join-party/join-party'
 import { SongsListPage } from '../pages/songs-list/songs-list'
-import { TabsPage } from '../pages/tabs/tabs'
+import { SettingsPage } from '../pages/settings/settings'
 
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
 
 import { MusicServiceProvider } from '../providers/music-service/music-service'
 import { SocketServiceProvider } from '../providers/socket-service/socket-service'
-import { SettingsPage } from '../pages/settings/settings'
 import { AppVersion } from '@ionic-native/app-version'
 
 @NgModule({
@@ -26,8 +25,7 @@ import { AppVersion } from '@ionic-native/app-version'
     JoinPartyPage,
     SongsListPage,
     WelcomePage,
-    SettingsPage,
-    TabsPage
+    SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -42,8 +40,7 @@ import { AppVersion } from '@ionic-native/app-version'
     JoinPartyPage,
     SongsListPage,
     WelcomePage,
-    SettingsPage,
-    TabsPage
+    SettingsPage
   ],
   providers: [
     StatusBar,

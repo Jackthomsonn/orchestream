@@ -1,15 +1,24 @@
   page-songs-list {
 
+    ion-content {
+      .currently-playing {
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 10px;
+        background: map-get($colors, 'secondary');
+      }
+    }
+
     .song-holder {
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      background: #FFF;
+      background: map-get($colors, 'lightwhite');
       padding: 1em;
 
       &:nth-of-type(even) {
-          background: lighten(#F7F8FB, 1%);
+          background: map-get($colors, 'secondary')
       }
 
       & > ion-col {
@@ -37,10 +46,10 @@
         display: flex;
 
         button {
-          background: map-get($colors, 'secondary');
-          color: #264653;
-          border: 1px solid darken(map-get($colors, 'secondary'), 10%);
-          box-shadow: 0 5px 30px darken(map-get($colors, 'secondary'), 5%);
+          background: map-get($colors, 'lightwhite');
+          color: map-get($colors, 'tertiary');
+          border: 1px solid darken(map-get($colors, 'lightwhite'), 10%);
+          box-shadow: 0 5px 30px darken(map-get($colors, 'lightwhite'), 5%);
           border-radius: 3px;
           padding: 1em;
           outline: none;

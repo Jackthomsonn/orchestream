@@ -1,16 +1,15 @@
+import { JoinPartyPage } from './../pages/join-party/join-party';
 import { Component } from '@angular/core'
 import { Platform } from 'ionic-angular'
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
-
-import { TabsPage } from '../pages/tabs/tabs'
 
 @Component({
   templateUrl: 'app.html'
 })
 
 export class MyApp {
-  public rootPage: any = TabsPage
+  public rootPage: any = JoinPartyPage
 
   constructor(
     platform: Platform,

@@ -1,3 +1,4 @@
+import { SettingsPage } from './../settings/settings';
 import { Component } from '@angular/core'
 import { IonicPage, NavController, AlertController } from 'ionic-angular'
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller'
@@ -33,10 +34,14 @@ export class JoinPartyPage {
     private qrScanner: QRScanner) {
   }
 
-  public getStarted() {
+  public getStarted = () => {
     this.qrScanner.prepare()
       .then(this.initialiseQrReader.bind(this))
       .catch(this.handleQrReaderException.bind(this))
+  }
+
+  public goToSettings = () => {
+    this.navCtrl.push(SettingsPage)
   }
 
   private handleQrReaderException() {

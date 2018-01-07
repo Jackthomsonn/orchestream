@@ -1,19 +1,30 @@
-<ion-header>
+<ion-header no-border>
   <ion-navbar>
-    <ion-title>Join an Orchestream</ion-title>
+    <ion-title>Join an orchestream</ion-title>
+    <ion-buttons end>
+      <button (click)="goToSettings()">
+        <ion-icon name="cog"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-grid>
-    <ion-col vertical-align>
-      <ion-col text-center>
-        <ion-img src="assets/imgs/qr_code.svg" width="180" height="180"></ion-img>
-
+  <ion-col>
+    <ion-col>
+      <ion-row justify-content-center>
+        <ion-icon name="qr-scanner"></ion-icon>
+      </ion-row>
+      <ion-row text-center justify-content-center>
+        <p>&nbsp;</p>
+        <h1>Be in control of the music you want to hear</h1>
+        <p>&nbsp;</p>
         <p>When your ready, click the button below and scan a Orchestream QR badge</p>
-
-        <button ion-button full (click)="getStarted()">Get Started</button>
-      </ion-col>
+      </ion-row>
     </ion-col>
-  </ion-grid>
+  </ion-col>
+
+  <div button-container ion-col text-center>
+    <button fab (click)='getStarted()'>Scan badge</button>
+  </div>
 </ion-content>

@@ -9,15 +9,17 @@ $app-direction: ltr;
 
 $colors: (
   primary:    #569BDE,
-  secondary:  #FFF,
+  primary-gradient: #8E8CE4,
+  secondary:  #F7FBFF,
+  lightwhite:  #FFF,
   tertiary:   #264653,
   danger:     #F76A6A
 );
 
 $toolbar-background: map-get($colors, 'primary');
 $tabs-background: map-get($colors, 'primary');
-$tabs-tab-color-active: map-get($colors, 'secondary');
-$tabs-tab-color-inactive: map-get($colors, 'secondary');
+
+$toolbar-background: map-get($colors, 'lightwhite');
 
 $searchbar-ios-background-color: transparent;
 $searchbar-ios-padding-horizontal: 0;

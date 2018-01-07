@@ -1,3 +1,17 @@
 page-join-party {
 
+  & > ion-header > ion-navbar > ion-buttons > button > ion-icon {
+    font-size: 25px;
+  }
+  
+  & > ion-content {
+    background-image: url('../assets/imgs/triangle2.png')!important;
+    background-size: 250%;
+    background-repeat: no-repeat;
+    background-position: bottom;
+
+    ion-icon {
+      font-size: 150px;
+    }
+  }
 }
