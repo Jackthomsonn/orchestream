@@ -4,6 +4,7 @@ import { Component } from '@angular/core'
 import { IonicPage, NavController } from 'ionic-angular'
 import { AlertController } from 'ionic-angular/components/alert/alert-controller'
 import { Platform } from 'ionic-angular/platform/platform';
+import { Haptic } from 'ionic-angular/tap-click/haptic';
 
 @IonicPage()
 @Component({
@@ -17,10 +18,14 @@ export class WelcomePage {
   constructor(
     private navCtrl: NavController,
     private nativeStorage: NativeStorage,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    private haptic: Haptic) {
   }
 
   public setUserPreferences() {
+    if (this.haptic.available()) {
+      this.haptic.impact({ style: 'heavy' })
+    }
     this.nativeStorage.setItem('username', this.nickname).then(() => {
       this.navCtrl.setRoot(JoinPartyPage)
     }).catch(error => {

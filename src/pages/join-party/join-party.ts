@@ -13,6 +13,7 @@ import { WelcomePage } from '../welcome/welcome'
 
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner'
 import { IParty } from '../../interfaces/IParty'
+import { Haptic } from 'ionic-angular/tap-click/haptic';
 
 @IonicPage()
 @Component({
@@ -31,10 +32,14 @@ export class JoinPartyPage {
     private socketServiceProvider: SocketServiceProvider,
     private nativeStorage: NativeStorage,
     private plt: Platform,
-    private qrScanner: QRScanner) {
+    private qrScanner: QRScanner,
+    private haptic: Haptic) {
   }
 
   public getStarted = () => {
+    if (this.haptic.available()) {
+      this.haptic.impact({ style: 'heavy' })
+    }
     this.qrScanner.prepare()
       .then(this.initialiseQrReader.bind(this))
       .catch(this.handleQrReaderException.bind(this))

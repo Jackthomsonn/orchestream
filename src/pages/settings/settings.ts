@@ -1,3 +1,4 @@
+import { Haptic } from 'ionic-angular/tap-click/haptic';
 import { AppVersion } from '@ionic-native/app-version'
 import { NativeStorage } from '@ionic-native/native-storage'
 import { Component } from '@angular/core'
@@ -18,10 +19,14 @@ export class SettingsPage {
   constructor(
     private nativeStorage: NativeStorage,
     private toastCtrl: ToastController,
-    private appInfo: AppVersion) {
+    private appInfo: AppVersion,
+    private haptic: Haptic) {
   }
 
   public update() {
+    if (this.haptic.available()) {
+      this.haptic.impact({ style: 'heavy' })
+    }
     this.nativeStorage.setItem('username', this.nickname).then(() => {
       const toast = this.toastCtrl.create({
         message: 'Nickname updated successfully',
