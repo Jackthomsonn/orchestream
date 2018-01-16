@@ -81,4 +81,5 @@
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
     <plugin name="cordova-plugin-taptic-engine" spec="^2.1.0" />
     <allow-navigation href="http://169.254.39.18:8100" />
+    <plugin name="cordova-plugin-ios-non-exempt-encryption" spec="^1.0.0" />
 </widget>
