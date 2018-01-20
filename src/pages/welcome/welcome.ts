@@ -26,6 +26,7 @@ export class WelcomePage {
     if (this.haptic.available()) {
       this.haptic.impact({ style: 'heavy' })
     }
+
     this.nativeStorage.setItem('username', this.nickname).then(() => {
       this.navCtrl.setRoot(JoinPartyPage)
     }).catch(error => {

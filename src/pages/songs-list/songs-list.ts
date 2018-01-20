@@ -1,3 +1,4 @@
+import { Haptic } from 'ionic-angular/tap-click/haptic';
 import { ISongRequest } from './../../interfaces/ISongRequest'
 import { ISong } from '../../interfaces/ISong'
 
@@ -10,6 +11,7 @@ import { SocketServiceProvider } from './../../providers/socket-service/socket-s
 
 import { Component } from '@angular/core'
 import { IonicPage, NavParams } from 'ionic-angular'
+import { Toast } from 'ionic-angular/components/toast/toast';
 
 @IonicPage()
 @Component({
@@ -19,12 +21,14 @@ import { IonicPage, NavParams } from 'ionic-angular'
 
 export class SongsListPage {
   public songs: Array<ISong>
+  public songsInQueue: Array<ISong>
   public currentlyPlaying: string
   public orchestreamName: string
   public searchValue: string
 
+  private toastInstance: Toast
+  private reconnectionToastInstance: Toast
   private nickname: string
-  private toastInstance: any
 
   constructor(
     private navParams: NavParams,
@@ -32,7 +36,8 @@ export class SongsListPage {
     private socketServiceProvider: SocketServiceProvider,
     private musicServiceProvider: MusicServiceProvider,
     private nativeStorage: NativeStorage,
-    private loadingCtrl: LoadingController) {
+    private loadingCtrl: LoadingController,
+    private haptic: Haptic) {
   }
 
   public search(event) {
@@ -54,6 +59,10 @@ export class SongsListPage {
   }
 
   public requestSong(song: ISong) {
+    if (this.haptic.available()) {
+      this.haptic.impact({ style: 'heavy' })
+    }
+
     const loading = this.loadingCtrl.create({
       spinner: 'crescent',
       content: 'Requesting song..'
@@ -154,6 +163,25 @@ export class SongsListPage {
     this.toastInstance.present()
   }
 
+  private handleDisconnection() {
+    this.reconnectionToastInstance = this.toastCtrl.create({
+      message: `Connection has been lost, reconnecting..`,
+      position: 'top'
+    })
+
+    this.reconnectionToastInstance.present()
+  }
+
+  private handleReconnection() {
+    this.reconnectionToastInstance.dismiss()
+
+    this.toastCtrl.create({
+      message: `Connection has been re-established`,
+      duration: 1000,
+      position: 'top'
+    }).present()
+  }
+
   ionViewDidLoad() {
     this.getUser()
     this.populateSongsList()
@@ -166,5 +194,9 @@ export class SongsListPage {
     })
 
     this.socketServiceProvider.on('songChanged', this.getCurrentSong.bind(this))
+
+    this.socketServiceProvider.on('disconnect', this.handleDisconnection.bind(this))
+
+    this.socketServiceProvider.on('reconnect', this.handleReconnection.bind(this))
   }
 }

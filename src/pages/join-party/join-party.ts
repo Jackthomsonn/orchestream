@@ -40,6 +40,7 @@ export class JoinPartyPage {
     if (this.haptic.available()) {
       this.haptic.impact({ style: 'heavy' })
     }
+
     this.qrScanner.prepare()
       .then(this.initialiseQrReader.bind(this))
       .catch(this.handleQrReaderException.bind(this))
