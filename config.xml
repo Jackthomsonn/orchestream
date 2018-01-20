@@ -71,7 +71,6 @@
     <allow-navigation href="http://169.254.232.163:8100" />
     <allow-navigation href="http://169.254.216.168:8100" />
     <allow-navigation href="http://169.254.39.18:8100" />
-    <engine name="ios" spec="4.5.4" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.1" />
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
@@ -82,4 +81,5 @@
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
     <plugin name="cordova-plugin-taptic-engine" spec="^2.1.0" />
     <plugin name="cordova-plugin-ios-non-exempt-encryption" spec="^1.0.0" />
+    <engine name="ios" spec="~4.5.4" />
 </widget>
