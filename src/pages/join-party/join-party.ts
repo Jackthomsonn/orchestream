@@ -143,7 +143,7 @@ export class JoinPartyPage {
     })
   }
 
-  ionViewDidLoad() {
+  private initialLoad() {
     this.plt.ready().then(() => {
       this.nativeStorage.getItem('username').then(data => {
         return
@@ -151,5 +151,9 @@ export class JoinPartyPage {
         this.navCtrl.push(WelcomePage)
       })
     })
+  }
+
+  ionViewDidLoad() {
+    this.initialLoad()
   }
 }
