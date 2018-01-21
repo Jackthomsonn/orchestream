@@ -30,7 +30,7 @@ export class SettingsPage {
     this.nativeStorage.setItem('username', this.nickname).then(() => {
       const toast = this.toastCtrl.create({
         message: 'Nickname updated successfully',
-        duration: 1000,
+        duration: 2000,
         position: 'top'
       })
 

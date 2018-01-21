@@ -12,6 +12,8 @@ import { SocketServiceProvider } from './../../providers/socket-service/socket-s
 import { Component } from '@angular/core'
 import { IonicPage, NavParams } from 'ionic-angular'
 import { Toast } from 'ionic-angular/components/toast/toast';
+import { NavController } from 'ionic-angular/navigation/nav-controller';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 
 @IonicPage()
 @Component({
@@ -28,11 +30,16 @@ export class SongsListPage {
 
   private toastInstance: Toast
   private reconnectionToastInstance: Toast
+  private handleReconnectionToastInstance: Toast
   private nickname: string
+  private forcedDisconnection: boolean
+  private throttleRequests: boolean
 
   constructor(
     private navParams: NavParams,
+    private navCtrl: NavController,
     private toastCtrl: ToastController,
+    private alertCtrl: AlertController,
     private socketServiceProvider: SocketServiceProvider,
     private musicServiceProvider: MusicServiceProvider,
     private nativeStorage: NativeStorage,
@@ -52,13 +59,16 @@ export class SongsListPage {
 
     this.musicServiceProvider.getSongs(this.searchValue).subscribe((songs: Array<ISong>) => {
       this.songs = songs
-      this.checkIfSongIsInQueue().then(() => {
-        loading.dismiss()
-      })
+      loading.dismiss()
+      this.checkIfSongIsInQueue()
     })
   }
 
   public requestSong(song: ISong) {
+    if(this.throttleRequests) {
+      return
+    }
+
     if (this.haptic.available()) {
       this.haptic.impact({ style: 'heavy' })
     }
@@ -92,6 +102,10 @@ export class SongsListPage {
         username: this.nickname
       })
       loading.dismiss()
+      this.throttleRequests = true
+      setTimeout(() => {
+        this.throttleRequests = false
+      }, 2000)
     })
   }
 
@@ -152,40 +166,68 @@ export class SongsListPage {
 
     this.toastInstance = this.toastCtrl.create({
       message: `${this.whoRequested(data)} requested ${data.artist} - ${data.songName}`,
-      duration: 1000,
+      duration: 2000,
       position: 'top'
     })
 
     this.toastInstance.onDidDismiss(() => {
-      this.toastInstance = null
+      this.toastInstance = undefined
     })
 
     this.toastInstance.present()
   }
 
   private handleDisconnection() {
-    this.reconnectionToastInstance = this.toastCtrl.create({
-      message: `Connection has been lost, reconnecting..`,
-      position: 'top'
-    })
+    if (this.reconnectionToastInstance) {
+      return
+    }
 
-    this.reconnectionToastInstance.present()
+    if (this.forcedDisconnection) {
+      return
+    } else {
+      this.reconnectionToastInstance = this.toastCtrl.create({
+        message: `Connection has been lost, reconnecting..`,
+        position: 'top'
+      })
+
+      this.reconnectionToastInstance.onDidDismiss(() => {
+        this.reconnectionToastInstance = undefined
+      })
+
+      this.reconnectionToastInstance.present()
+    }
   }
 
   private handleReconnection() {
-    this.reconnectionToastInstance.dismiss()
+    if(this.reconnectionToastInstance) {
+      this.reconnectionToastInstance.dismiss()
+    }
 
-    this.toastCtrl.create({
+    if(this.handleReconnectionToastInstance) {
+      return
+    }
+
+    this.socketServiceProvider.emit('joinRoom', this.socketServiceProvider.partyId)
+
+    this.handleReconnectionToastInstance = this.toastCtrl.create({
       message: `Connection has been re-established`,
-      duration: 1000,
+      duration: 2000,
       position: 'top'
-    }).present()
+    })
+
+    this.handleReconnectionToastInstance.onDidDismiss(() => {
+      this.handleReconnectionToastInstance = undefined
+    })
+
+    this.handleReconnectionToastInstance.present()
   }
 
   ionViewDidLoad() {
     this.getUser()
     this.populateSongsList()
     this.getCurrentSong()
+
+    this.forcedDisconnection = false
 
     this.socketServiceProvider.on('songRequested', (data: ISongRequest) => {
       this.checkIfSongIsInQueue()
@@ -198,5 +240,12 @@ export class SongsListPage {
     this.socketServiceProvider.on('disconnect', this.handleDisconnection.bind(this))
 
     this.socketServiceProvider.on('reconnect', this.handleReconnection.bind(this))
+
+    this.socketServiceProvider.socket.connect()
+  }
+
+  ionViewWillUnload() {
+    this.forcedDisconnection = true
+    this.socketServiceProvider.socket.close()
   }
 }

@@ -1,0 +1,9 @@
+page-setup {
+
+  & > ion-content {
+    background-image: url('../assets/imgs/triangle2.png')!important;
+    background-size: 250%;
+    background-repeat: no-repeat;
+    background-position: bottom;
+  }
+}

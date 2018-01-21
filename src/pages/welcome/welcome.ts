@@ -1,10 +1,10 @@
-import { JoinPartyPage } from './../join-party/join-party'
-import { NativeStorage } from '@ionic-native/native-storage'
-import { Component } from '@angular/core'
-import { IonicPage, NavController } from 'ionic-angular'
-import { AlertController } from 'ionic-angular/components/alert/alert-controller'
-import { Platform } from 'ionic-angular/platform/platform';
 import { Haptic } from 'ionic-angular/tap-click/haptic';
+import { SetupPage } from './../setup/setup';
+import { NavController } from 'ionic-angular/navigation/nav-controller'
+import { Component } from '@angular/core'
+import { IonicPage } from 'ionic-angular'
+import { Slides } from 'ionic-angular/components/slides/slides'
+import { ViewChild } from '@angular/core'
 
 @IonicPage()
 @Component({
@@ -13,29 +13,26 @@ import { Haptic } from 'ionic-angular/tap-click/haptic';
 })
 
 export class WelcomePage {
-  public nickname: string
+  @ViewChild(Slides) slides: Slides;
 
   constructor(
     private navCtrl: NavController,
-    private nativeStorage: NativeStorage,
-    private alertCtrl: AlertController,
     private haptic: Haptic) {
   }
 
-  public setUserPreferences() {
+  public goToNextSlide() {
+    this.slides.slideNext()
+
     if (this.haptic.available()) {
       this.haptic.impact({ style: 'heavy' })
     }
+  }
 
-    this.nativeStorage.setItem('username', this.nickname).then(() => {
-      this.navCtrl.setRoot(JoinPartyPage)
-    }).catch(error => {
-      const alert = this.alertCtrl.create({
-        title: 'Error',
-        subTitle: JSON.stringify(error),
-        buttons: ['Dismiss']
-      })
-      alert.present()
-    })
+  public goToSetup() {
+    this.navCtrl.push(SetupPage)
+
+    if (this.haptic.available()) {
+      this.haptic.impact({ style: 'heavy' })
+    }
   }
 }

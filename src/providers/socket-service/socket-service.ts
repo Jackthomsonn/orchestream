@@ -21,11 +21,11 @@ export class SocketServiceProvider {
     })
   }
 
-  public emit(event, data) {
+  public emit(event: string, data?: any) {
     this.socket.emit(event, data)
   }
 
-  public on(event, callback) {
+  public on(event: string, callback: Function) {
     this.socket.on(event, callback)
   }
 }

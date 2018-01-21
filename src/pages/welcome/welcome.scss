@@ -5,5 +5,19 @@ page-welcome {
     background-size: 250%;
     background-repeat: no-repeat;
     background-position: bottom;
+
+    ion-slides {
+
+      ion-slide {
+        padding: 20vh 0;
+        display: flex;
+        justify-content: flex-start!important;
+        align-items: flex-start!important;
+
+        ion-icon {
+          font-size: 150px;
+        }
+      }
+    }
   }
 }

@@ -1,0 +1,24 @@
+<ion-header no-border>
+  <ion-navbar hideBackButton>
+    <ion-title>Lets get you setup</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-col text-center>
+    <h2>Give yourself a nickname</h2>
+    <p>Make sure to not use your real name</p>
+  </ion-col>
+  <ion-col>
+    <ion-item>
+      <ion-label color='primary' floating>Choose a nickname</ion-label>
+      <ion-input type='text' [(ngModel)]='nickname'></ion-input>
+    </ion-item>
+  </ion-col>
+  <div button-container ion-col text-center>
+    <button fab [disabled]='!nickname' (click)='setUserPreferences()' ion-button icon-end>
+      Lets get started
+      <ion-icon name="arrow-forward" style='font-size: 22px'></ion-icon>
+    </button>
+  </div>
+</ion-content>

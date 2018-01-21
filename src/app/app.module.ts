@@ -18,6 +18,7 @@ import { SplashScreen } from '@ionic-native/splash-screen'
 import { MusicServiceProvider } from '../providers/music-service/music-service'
 import { SocketServiceProvider } from '../providers/socket-service/socket-service'
 import { AppVersion } from '@ionic-native/app-version'
+import { SetupPage } from '../pages/setup/setup';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AppVersion } from '@ionic-native/app-version'
     JoinPartyPage,
     SongsListPage,
     WelcomePage,
-    SettingsPage
+    SettingsPage,
+    SetupPage
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { AppVersion } from '@ionic-native/app-version'
     JoinPartyPage,
     SongsListPage,
     WelcomePage,
-    SettingsPage
+    SettingsPage,
+    SetupPage
   ],
   providers: [
     StatusBar,

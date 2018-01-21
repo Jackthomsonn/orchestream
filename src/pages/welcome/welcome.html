@@ -1,24 +1,34 @@
 <ion-header no-border>
   <ion-navbar hideBackButton>
-    <ion-title>Lets get you set up</ion-title>
+    <ion-title>Welcome</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-col text-center>
-    <h2>Give yourself a nickname</h2>
-    <p>Make sure to not use your real name</p>
-  </ion-col>
-  <ion-col>
-    <ion-item>
-      <ion-label color='primary' floating>Choose a nickname</ion-label>
-      <ion-input type='text' [(ngModel)]='nickname'></ion-input>
-    </ion-item>
-  </ion-col>
-  <div button-container ion-col text-center>
-    <button fab [disabled]='!nickname' (click)='setUserPreferences()' ion-button icon-end>
-      Lets get started
-      <ion-icon name="arrow-forward" style='font-size: 22px'></ion-icon>
-    </button>
-  </div>
+  <ion-slides pager>
+    <ion-slide>
+      <ion-icon name="ios-code-working"></ion-icon>
+      <h5>What is Orchestream?</h5>
+      <h6>Orchestream gives
+        <strong>you</strong> the power to be in control of the music</h6>
+      <div button-container ion-col text-center>
+        <button (click)="goToNextSlide()" fab ion-button icon-end>
+          How do I join an Orchestream?
+          <ion-icon name="arrow-forward" style='font-size: 22px'></ion-icon>
+        </button>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <ion-icon name="ios-navigate-outline"></ion-icon>
+      <h5>How do I join an Orchestream?</h5>
+      <h6>Look out for an Orchestream badge. You will usually find them in Resturants or clubs. Scan the QR code and your ready
+        to go</h6>
+      <div button-container ion-col text-center>
+        <button (click)="goToSetup()" fab ion-button icon-end>
+          Got it!
+          <ion-icon name="arrow-forward" style='font-size: 22px'></ion-icon>
+        </button>
+      </div>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
