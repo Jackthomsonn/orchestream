@@ -1,8 +1,8 @@
 {
   "name": "orchestream",
-  "app_id": "eabdc03c",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "type": "ionic-angular",
+  "pro_id": "eabdc03c"
 }
